@@ -70,6 +70,13 @@
   		<artifactId>de.unistuttgart.ims.drama.ui.json</artifactId>
   		<version>1.0</version>
   	</dependency>
+  	<dependency>
+  		<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+  		<artifactId>
+  			de.tudarmstadt.ukp.dkpro.core.languagetool-asl
+  		</artifactId>
+  		<version>1.7.0</version>
+  	</dependency>
   </dependencies>
   <version>0.0.1</version>
 </project>
