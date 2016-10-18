@@ -25,7 +25,7 @@ public class TEI2XMI {
 		Options options = CliFactory.parseArguments(Options.class, args);
 
 		CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(TextgridTEIUrlReader.class,
-				TextgridTEIUrlReader.PARAM_INPUT_DIRECTORY, options.getInputDirectory());
+				TextgridTEIUrlReader.PARAM_INPUT_DIRECTORY, options.getInput());
 
 		AggregateBuilder builder = new AggregateBuilder();
 
@@ -38,7 +38,7 @@ public class TEI2XMI {
 		builder.add(createEngineDescription(FigureMentionDetection.class));
 
 		builder.add(createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION,
-				options.getOutputDirectory()));
+				options.getOutput()));
 
 		SimplePipeline.runPipeline(reader, builder.createAggregateDescription());
 	}

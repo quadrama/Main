@@ -6,8 +6,8 @@ import com.lexicalscope.jewel.cli.Option;
 
 public interface Options {
 	@Option
-	File getInputDirectory();
+	File getInput();
 
 	@Option
-	File getOutputDirectory();
+	File getOutput();
 }
