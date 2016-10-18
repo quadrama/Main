@@ -3,6 +3,12 @@
   <groupId>de.unistuttgart.ims</groupId>
   <artifactId>drama.Main</artifactId>
   <dependencies>
+   	<dependency>
+  		<groupId>de.unistuttgart.ims</groupId>
+  		<artifactId>uimautil</artifactId>
+  		<version>0.6.4-SNAPSHOT</version>
+  	</dependency>
+
   	<dependency>
   		<groupId>com.lexicalscope.jewelcli</groupId>
   		<artifactId>jewelcli</artifactId>
@@ -76,6 +82,11 @@
   			de.tudarmstadt.ukp.dkpro.core.languagetool-asl
   		</artifactId>
   		<version>1.7.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-io</groupId>
+  		<artifactId>commons-io</artifactId>
+  		<version>2.5</version>
   	</dependency>
   </dependencies>
   <version>0.0.1</version>
