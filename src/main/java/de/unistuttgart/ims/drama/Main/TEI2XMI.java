@@ -2,15 +2,12 @@ package de.unistuttgart.ims.drama.Main;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
-import java.io.File;
-
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AggregateBuilder;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 
 import com.lexicalscope.jewel.cli.CliFactory;
-import com.lexicalscope.jewel.cli.Option;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.languagetool.LanguageToolSegmenter;
@@ -44,14 +41,6 @@ public class TEI2XMI {
 				options.getOutputDirectory()));
 
 		SimplePipeline.runPipeline(reader, builder.createAggregateDescription());
-	}
-
-	public interface Options {
-		@Option
-		File getInputDirectory();
-
-		@Option
-		File getOutputDirectory();
 	}
 
 }
