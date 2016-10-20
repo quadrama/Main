@@ -10,10 +10,10 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import com.lexicalscope.jewel.cli.CliFactory;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
-import de.tudarmstadt.ukp.dkpro.core.languagetool.LanguageToolSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.matetools.MateLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
+import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.unistuttgart.quadrama.core.DramaSpeechSegmenter;
 import de.unistuttgart.quadrama.core.FigureMentionDetection;
 import de.unistuttgart.quadrama.core.FigureReferenceAnnotator;
@@ -30,7 +30,7 @@ public class TEI2XMI {
 
 		AggregateBuilder builder = new AggregateBuilder();
 
-		builder.add(DramaSpeechSegmenter.getWrappedSegmenterDescription(LanguageToolSegmenter.class));
+		builder.add(DramaSpeechSegmenter.getWrappedSegmenterDescription(BreakIteratorSegmenter.class));
 		builder.add(createEngineDescription(FigureReferenceAnnotator.class));
 		builder.add(
 				createEngineDescription(SpeakerIdentifier.class, SpeakerIdentifier.PARAM_CREATE_SPEAKER_FIGURE, true));
