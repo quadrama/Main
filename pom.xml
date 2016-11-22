@@ -3,6 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.unistuttgart.ims</groupId>
 	<artifactId>drama.Main</artifactId>
+	<properties>
+		<dramanlp.version>0.4.1</dramanlp.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
@@ -13,7 +16,7 @@
 		<dependency>
 			<groupId>de.unistuttgart.ims</groupId>
 			<artifactId>de.unistuttgart.ims.drama.api</artifactId>
-			<version>0.3.1</version>
+			<version>${dramanlp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.unistuttgart.ims</groupId>
@@ -36,12 +39,12 @@
 			<artifactId>
   			de.unistuttgart.ims.drama.io.tei.textgrid
   		</artifactId>
-			<version>0.3.1</version>
+			<version>${dramanlp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.unistuttgart.ims</groupId>
 			<artifactId>de.unistuttgart.ims.drama.core</artifactId>
-			<version>0.3.1</version>
+			<version>${dramanlp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
@@ -72,11 +75,6 @@
 			<version>1.7.0</version>
 		</dependency>
 		<dependency>
-			<groupId>de.unistuttgart.ims</groupId>
-			<artifactId>de.unistuttgart.ims.drama.graph</artifactId>
-			<version>0.3.1</version>
-		</dependency>
-		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>
   			de.tudarmstadt.ukp.dkpro.core.matetools-gpl
@@ -89,7 +87,7 @@
 			<version>2.5</version>
 		</dependency>
 	</dependencies>
-  <version>1.0.2</version>
+  <version>1.1.0</version>
 	<build>
 		<plugins>
 			<plugin>
