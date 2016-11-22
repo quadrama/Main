@@ -18,6 +18,7 @@ import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.unistuttgart.quadrama.core.DramaSpeechSegmenter;
+import de.unistuttgart.quadrama.core.FigureDetailsAnnotator;
 import de.unistuttgart.quadrama.core.FigureMentionDetection;
 import de.unistuttgart.quadrama.core.FigureReferenceAnnotator;
 import de.unistuttgart.quadrama.core.ReadDlinaMetadata;
@@ -37,6 +38,7 @@ public class TEI2XMI {
 
 		builder.add(DramaSpeechSegmenter.getWrappedSegmenterDescription(BreakIteratorSegmenter.class));
 		builder.add(createEngineDescription(FigureReferenceAnnotator.class));
+		builder.add(createEngineDescription(FigureDetailsAnnotator.class));
 		builder.add(
 				createEngineDescription(SpeakerIdentifier.class, SpeakerIdentifier.PARAM_CREATE_SPEAKER_FIGURE, true));
 		if (options.getDlinaDirectory() != null) {
