@@ -59,5 +59,8 @@ public class TEI2XMI {
 	interface MyOptions extends Options {
 		@Option(defaultToNull = true)
 		File getDlinaDirectory();
+
+		@Option(defaultToNull = true)
+		String getIdPrefix();
 	}
 }
