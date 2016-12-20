@@ -32,7 +32,8 @@ public class TEI2XMI {
 		MyOptions options = CliFactory.parseArguments(MyOptions.class, args);
 
 		CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(TextgridTEIUrlReader.class,
-				TextgridTEIUrlReader.PARAM_INPUT, options.getInput(), TextgridTEIUrlReader.PARAM_CLEANUP, true);
+				TextgridTEIUrlReader.PARAM_INPUT, options.getInput(), TextgridTEIUrlReader.PARAM_CLEANUP, true,
+				TextgridTEIUrlReader.PARAM_STRICT, true);
 
 		AggregateBuilder builder = new AggregateBuilder();
 
