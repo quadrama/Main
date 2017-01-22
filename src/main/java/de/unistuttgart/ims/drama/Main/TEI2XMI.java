@@ -17,6 +17,7 @@ import de.tudarmstadt.ukp.dkpro.core.matetools.MateLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
+import de.unistuttgart.ims.drama.core.ml.gender.ClearTkGenderAnnotator;
 import de.unistuttgart.quadrama.core.DramaSpeechSegmenter;
 import de.unistuttgart.quadrama.core.FigureDetailsAnnotator;
 import de.unistuttgart.quadrama.core.FigureMentionDetection;
@@ -32,7 +33,8 @@ public class TEI2XMI {
 		MyOptions options = CliFactory.parseArguments(MyOptions.class, args);
 
 		CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(TextgridTEIUrlReader.class,
-				TextgridTEIUrlReader.PARAM_INPUT, options.getInput(), TextgridTEIUrlReader.PARAM_CLEANUP, true);
+				TextgridTEIUrlReader.PARAM_INPUT, options.getInput(), TextgridTEIUrlReader.PARAM_CLEANUP, true,
+				TextgridTEIUrlReader.PARAM_STRICT, true);
 
 		AggregateBuilder builder = new AggregateBuilder();
 
@@ -45,6 +47,9 @@ public class TEI2XMI {
 			builder.add(createEngineDescription(ReadDlinaMetadata.class, ReadDlinaMetadata.PARAM_DLINA_DIRECTORY,
 					options.getDlinaDirectory()));
 			builder.add(createEngineDescription(SetReferenceDate.class));
+		}
+		if (options.getGenderModel() != null) {
+			builder.add(ClearTkGenderAnnotator.getEngineDescription(options.getGenderModel().getAbsolutePath()));
 		}
 		builder.add(createEngineDescription(StanfordPosTagger.class));
 		builder.add(createEngineDescription(MateLemmatizer.class));
@@ -59,5 +64,11 @@ public class TEI2XMI {
 	interface MyOptions extends Options {
 		@Option(defaultToNull = true)
 		File getDlinaDirectory();
+
+		@Option(defaultToNull = true)
+		String getIdPrefix();
+
+		@Option(defaultToNull = true)
+		File getGenderModel();
 	}
 }
