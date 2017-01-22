@@ -17,6 +17,7 @@ import de.tudarmstadt.ukp.dkpro.core.matetools.MateLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
+import de.unistuttgart.ims.drama.core.ml.gender.ClearTkGenderAnnotator;
 import de.unistuttgart.quadrama.core.DramaSpeechSegmenter;
 import de.unistuttgart.quadrama.core.FigureDetailsAnnotator;
 import de.unistuttgart.quadrama.core.FigureMentionDetection;
@@ -47,6 +48,9 @@ public class TEI2XMI {
 					options.getDlinaDirectory()));
 			builder.add(createEngineDescription(SetReferenceDate.class));
 		}
+		if (options.getGenderModel() != null) {
+			builder.add(ClearTkGenderAnnotator.getEngineDescription(options.getGenderModel().getAbsolutePath()));
+		}
 		builder.add(createEngineDescription(StanfordPosTagger.class));
 		builder.add(createEngineDescription(MateLemmatizer.class));
 		builder.add(createEngineDescription(StanfordNamedEntityRecognizer.class));
@@ -63,5 +67,8 @@ public class TEI2XMI {
 
 		@Option(defaultToNull = true)
 		String getIdPrefix();
+
+		@Option(defaultToNull = true)
+		File getGenderModel();
 	}
 }
