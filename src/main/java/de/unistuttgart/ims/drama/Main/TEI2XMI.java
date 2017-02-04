@@ -5,6 +5,7 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.util.Iterator;
 
 import org.apache.uima.cas.impl.XmiCasDeserializer;
@@ -68,7 +69,12 @@ public class TEI2XMI {
 		SimplePipeline.runPipeline(reader, builder.createAggregateDescription());
 
 		if (options.isDoCleanup())
-			for (File f : options.getOutput().listFiles()) {
+			for (File f : options.getOutput().listFiles(new FilenameFilter() {
+
+				public boolean accept(File dir, String name) {
+					return name.endsWith("xmi");
+				}
+			})) {
 				JCas jcas = JCasFactory.createJCas();
 				XmiCasDeserializer.deserialize(new FileInputStream(f), jcas.getCas());
 				Iterator<JCas> iter = jcas.getViewIterator("tmp");
