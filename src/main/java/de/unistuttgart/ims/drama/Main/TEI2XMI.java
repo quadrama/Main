@@ -3,11 +3,19 @@ package de.unistuttgart.ims.drama.Main;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.util.Iterator;
 
+import org.apache.uima.cas.impl.XmiCasDeserializer;
+import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AggregateBuilder;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
+import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
+import org.apache.uima.jcas.JCas;
 
 import com.lexicalscope.jewel.cli.CliFactory;
 import com.lexicalscope.jewel.cli.Option;
@@ -18,7 +26,7 @@ import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.unistuttgart.ims.drama.core.ml.gender.ClearTkGenderAnnotator;
-import de.unistuttgart.quadrama.core.DramaSpeechSegmenter;
+import de.unistuttgart.quadrama.core.D;
 import de.unistuttgart.quadrama.core.FigureDetailsAnnotator;
 import de.unistuttgart.quadrama.core.FigureMentionDetection;
 import de.unistuttgart.quadrama.core.FigureReferenceAnnotator;
@@ -38,7 +46,7 @@ public class TEI2XMI {
 
 		AggregateBuilder builder = new AggregateBuilder();
 
-		builder.add(DramaSpeechSegmenter.getWrappedSegmenterDescription(BreakIteratorSegmenter.class));
+		builder.add(D.getWrappedSegmenterDescription(BreakIteratorSegmenter.class));
 		builder.add(createEngineDescription(FigureReferenceAnnotator.class));
 		builder.add(createEngineDescription(FigureDetailsAnnotator.class));
 		builder.add(
@@ -59,6 +67,22 @@ public class TEI2XMI {
 		builder.add(createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, options.getOutput()));
 
 		SimplePipeline.runPipeline(reader, builder.createAggregateDescription());
+
+		if (options.isDoCleanup())
+			for (File f : options.getOutput().listFiles(new FilenameFilter() {
+
+				public boolean accept(File dir, String name) {
+					return name.endsWith("xmi");
+				}
+			})) {
+				JCas jcas = JCasFactory.createJCas();
+				XmiCasDeserializer.deserialize(new FileInputStream(f), jcas.getCas());
+				Iterator<JCas> iter = jcas.getViewIterator("tmp");
+				while (iter.hasNext()) {
+					iter.next().reset();
+				}
+				XmiCasSerializer.serialize(jcas.getCas(), new FileOutputStream(f));
+			}
 	}
 
 	interface MyOptions extends Options {
@@ -70,5 +94,8 @@ public class TEI2XMI {
 
 		@Option(defaultToNull = true)
 		File getGenderModel();
+
+		@Option(defaultValue = "true")
+		boolean isDoCleanup();
 	}
 }
