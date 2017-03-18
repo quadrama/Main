@@ -26,7 +26,7 @@ import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.unistuttgart.ims.drama.core.ml.gender.ClearTkGenderAnnotator;
-import de.unistuttgart.quadrama.core.DramaSpeechSegmenter;
+import de.unistuttgart.quadrama.core.D;
 import de.unistuttgart.quadrama.core.FigureDetailsAnnotator;
 import de.unistuttgart.quadrama.core.FigureMentionDetection;
 import de.unistuttgart.quadrama.core.FigureReferenceAnnotator;
@@ -46,7 +46,7 @@ public class TEI2XMI {
 
 		AggregateBuilder builder = new AggregateBuilder();
 
-		builder.add(DramaSpeechSegmenter.getWrappedSegmenterDescription(BreakIteratorSegmenter.class));
+		builder.add(D.getWrappedSegmenterDescription(BreakIteratorSegmenter.class));
 		builder.add(createEngineDescription(FigureReferenceAnnotator.class));
 		builder.add(createEngineDescription(FigureDetailsAnnotator.class));
 		builder.add(
