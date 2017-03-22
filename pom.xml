@@ -103,14 +103,32 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4.3</version>
+				<version>3.0.0</version>
 				<executions>
 					<execution>
+						<id>jar-with-version</id>
 						<phase>package</phase>
 						<goals>
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+							<outputFile>target/assembly/drama.Main-${project.version}.jar</outputFile>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/org.apache.uima.fit/types.txt</resource>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jar-without-version</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<outputFile>target/assembly/drama.Main.jar</outputFile>
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
