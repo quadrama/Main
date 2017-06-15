@@ -14,7 +14,7 @@ import com.lexicalscope.jewel.cli.CliFactory;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.unistuttgart.ims.drama.api.Utterance;
-import de.unistuttgart.ims.uimautil.CoNLLStyleExporter;
+import de.unistuttgart.ims.uimautil.CoNLLCasConsumer;
 
 public class XMI2UtteranceCSV {
 
@@ -26,9 +26,9 @@ public class XMI2UtteranceCSV {
 				XmiReader.PARAM_SOURCE_LOCATION, options.getInput() + File.separator + "*.xmi");
 
 		AggregateBuilder builder = new AggregateBuilder();
-		builder.add(createEngineDescription(CoNLLStyleExporter.class, CoNLLStyleExporter.PARAM_OUTPUT_FILE,
-				options.getOutput(), CoNLLStyleExporter.PARAM_CONFIGURATION_FILE, configURL.toString(),
-				CoNLLStyleExporter.PARAM_ANNOTATION_CLASS, Utterance.class));
+		builder.add(createEngineDescription(CoNLLCasConsumer.class, CoNLLCasConsumer.PARAM_OUTPUT_FILE,
+				options.getOutput(), CoNLLCasConsumer.PARAM_CONFIGURATION_FILE, configURL.toString(),
+				CoNLLCasConsumer.PARAM_ANNOTATION_CLASS, Utterance.class));
 
 		SimplePipeline.runPipeline(reader, builder.createAggregateDescription());
 
