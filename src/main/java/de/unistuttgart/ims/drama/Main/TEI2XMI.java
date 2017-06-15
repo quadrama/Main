@@ -34,6 +34,7 @@ import de.unistuttgart.quadrama.core.ReadDlinaMetadata;
 import de.unistuttgart.quadrama.core.SceneActAnnotator;
 import de.unistuttgart.quadrama.core.SetReferenceDate;
 import de.unistuttgart.quadrama.core.SpeakerIdentifier;
+import de.unistuttgart.quadrama.io.core.AbstractDramaUrlReader;
 import de.unistuttgart.quadrama.io.tei.textgrid.TextgridTEIUrlReader;
 
 public class TEI2XMI {
@@ -41,9 +42,18 @@ public class TEI2XMI {
 	public static void main(String[] args) throws Exception {
 		MyOptions options = CliFactory.parseArguments(MyOptions.class, args);
 
-		CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(TextgridTEIUrlReader.class,
-				TextgridTEIUrlReader.PARAM_INPUT, options.getInput(), TextgridTEIUrlReader.PARAM_CLEANUP, true,
-				TextgridTEIUrlReader.PARAM_STRICT, true);
+		Class<? extends AbstractDramaUrlReader> rcl = getReaderClass(options.getReaderClassname());
+
+		CollectionReaderDescription reader;
+		if (rcl == TextgridTEIUrlReader.class) {
+			reader = CollectionReaderFactory.createReaderDescription(rcl, TextgridTEIUrlReader.PARAM_INPUT,
+					options.getInput(), TextgridTEIUrlReader.PARAM_CLEANUP, true, TextgridTEIUrlReader.PARAM_STRICT,
+					true, TextgridTEIUrlReader.PARAM_LANGUAGE, options.getLanguage());
+		} else {
+			reader = CollectionReaderFactory.createReaderDescription(rcl, AbstractDramaUrlReader.PARAM_INPUT,
+					options.getInput(), AbstractDramaUrlReader.PARAM_CLEANUP, true,
+					AbstractDramaUrlReader.PARAM_LANGUAGE, options.getLanguage());
+		}
 
 		AggregateBuilder builder = new AggregateBuilder();
 
@@ -87,6 +97,21 @@ public class TEI2XMI {
 			}
 	}
 
+	@SuppressWarnings("unchecked")
+	public static Class<? extends AbstractDramaUrlReader> getReaderClass(String readerClassname) {
+		Class<?> cl;
+		try {
+			cl = Class.forName(readerClassname);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return TextgridTEIUrlReader.class;
+		}
+		if (AbstractDramaUrlReader.class.isAssignableFrom(cl))
+			return (Class<? extends AbstractDramaUrlReader>) cl;
+		return TextgridTEIUrlReader.class;
+
+	}
+
 	interface MyOptions extends Options {
 		@Option(defaultToNull = true)
 		File getDlinaDirectory();
@@ -99,5 +124,11 @@ public class TEI2XMI {
 
 		@Option(defaultValue = "true")
 		boolean isDoCleanup();
+
+		@Option(defaultValue = "de.unistuttgart.quadrama.io.tei.textgrid.TextgridTEIUrlReader")
+		String getReaderClassname();
+
+		@Option(defaultValue = "de")
+		String getLanguage();
 	}
 }
