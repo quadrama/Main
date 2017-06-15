@@ -72,7 +72,8 @@ public class TEI2XMI {
 		}
 		builder.add(createEngineDescription(StanfordPosTagger.class));
 		builder.add(createEngineDescription(MateLemmatizer.class));
-		builder.add(createEngineDescription(StanfordNamedEntityRecognizer.class));
+		if (options.getDoNER())
+			builder.add(createEngineDescription(StanfordNamedEntityRecognizer.class));
 		builder.add(createEngineDescription(FigureMentionDetection.class));
 		builder.add(SceneActAnnotator.getDescription());
 
@@ -130,5 +131,8 @@ public class TEI2XMI {
 
 		@Option(defaultValue = "de")
 		String getLanguage();
+
+		@Option(defaultValue = "true")
+		boolean getDoNER();
 	}
 }
