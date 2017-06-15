@@ -26,6 +26,7 @@ import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.unistuttgart.ims.drama.core.ml.gender.ClearTkGenderAnnotator;
+import de.unistuttgart.ims.drama.util.SetCollectionId;
 import de.unistuttgart.quadrama.core.D;
 import de.unistuttgart.quadrama.core.FigureDetailsAnnotator;
 import de.unistuttgart.quadrama.core.FigureMentionDetection;
@@ -59,6 +60,9 @@ public class TEI2XMI {
 
 		builder.add(D.getWrappedSegmenterDescription(BreakIteratorSegmenter.class));
 		builder.add(createEngineDescription(FigureReferenceAnnotator.class));
+		if (options.getCollectionId() != null)
+			builder.add(createEngineDescription(SetCollectionId.class, SetCollectionId.PARAM_COLLECTION_ID,
+					options.getCollectionId()));
 		builder.add(createEngineDescription(FigureDetailsAnnotator.class));
 		builder.add(
 				createEngineDescription(SpeakerIdentifier.class, SpeakerIdentifier.PARAM_CREATE_SPEAKER_FIGURE, true));
@@ -118,7 +122,7 @@ public class TEI2XMI {
 		File getDlinaDirectory();
 
 		@Option(defaultToNull = true)
-		String getIdPrefix();
+		String getCollectionId();
 
 		@Option(defaultToNull = true)
 		File getGenderModel();
