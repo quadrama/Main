@@ -36,6 +36,7 @@ import de.unistuttgart.quadrama.core.SceneActAnnotator;
 import de.unistuttgart.quadrama.core.SetReferenceDate;
 import de.unistuttgart.quadrama.core.SpeakerIdentifier;
 import de.unistuttgart.quadrama.io.core.AbstractDramaUrlReader;
+import de.unistuttgart.quadrama.io.tei.textgrid.MapFiguresToCastFigures;
 import de.unistuttgart.quadrama.io.tei.textgrid.TextgridTEIUrlReader;
 
 public class TEI2XMI {
@@ -64,9 +65,11 @@ public class TEI2XMI {
 			builder.add(createEngineDescription(SetCollectionId.class, SetCollectionId.PARAM_COLLECTION_ID,
 					options.getCollectionId()));
 		builder.add(createEngineDescription(FigureDetailsAnnotator.class));
-		if (!options.getSkipSpeakerIdentifier())
+		if (!options.getSkipSpeakerIdentifier()) {
 			builder.add(createEngineDescription(SpeakerIdentifier.class, SpeakerIdentifier.PARAM_CREATE_SPEAKER_FIGURE,
 					true));
+			builder.add(createEngineDescription(MapFiguresToCastFigures.class));
+		}
 		if (options.getDlinaDirectory() != null) {
 			builder.add(createEngineDescription(ReadDlinaMetadata.class, ReadDlinaMetadata.PARAM_DLINA_DIRECTORY,
 					options.getDlinaDirectory()));
