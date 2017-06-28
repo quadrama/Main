@@ -64,8 +64,9 @@ public class TEI2XMI {
 			builder.add(createEngineDescription(SetCollectionId.class, SetCollectionId.PARAM_COLLECTION_ID,
 					options.getCollectionId()));
 		builder.add(createEngineDescription(FigureDetailsAnnotator.class));
-		builder.add(
-				createEngineDescription(SpeakerIdentifier.class, SpeakerIdentifier.PARAM_CREATE_SPEAKER_FIGURE, true));
+		if (!options.getSkipSpeakerIdentifier())
+			builder.add(createEngineDescription(SpeakerIdentifier.class, SpeakerIdentifier.PARAM_CREATE_SPEAKER_FIGURE,
+					true));
 		if (options.getDlinaDirectory() != null) {
 			builder.add(createEngineDescription(ReadDlinaMetadata.class, ReadDlinaMetadata.PARAM_DLINA_DIRECTORY,
 					options.getDlinaDirectory()));
@@ -138,5 +139,8 @@ public class TEI2XMI {
 
 		@Option(defaultValue = "false")
 		boolean getSkipNER();
+
+		@Option(defaultValue = "false")
+		boolean getSkipSpeakerIdentifier();
 	}
 }
