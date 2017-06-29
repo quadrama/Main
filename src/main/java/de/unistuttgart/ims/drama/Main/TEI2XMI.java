@@ -65,7 +65,7 @@ public class TEI2XMI {
 			builder.add(createEngineDescription(SetCollectionId.class, SetCollectionId.PARAM_COLLECTION_ID,
 					options.getCollectionId()));
 		builder.add(createEngineDescription(FigureDetailsAnnotator.class));
-		if (!options.getSkipSpeakerIdentifier()) {
+		if (!options.isSkipSpeakerIdentifier()) {
 			builder.add(createEngineDescription(SpeakerIdentifier.class, SpeakerIdentifier.PARAM_CREATE_SPEAKER_FIGURE,
 					true));
 			builder.add(createEngineDescription(MapFiguresToCastFigures.class));
@@ -80,7 +80,7 @@ public class TEI2XMI {
 		}
 		builder.add(createEngineDescription(StanfordPosTagger.class));
 		builder.add(createEngineDescription(MateLemmatizer.class));
-		if (!options.getSkipNER())
+		if (!options.isSkipNER())
 			builder.add(createEngineDescription(StanfordNamedEntityRecognizer.class));
 		builder.add(createEngineDescription(FigureMentionDetection.class));
 		builder.add(SceneActAnnotator.getDescription());
@@ -140,10 +140,10 @@ public class TEI2XMI {
 		@Option(defaultValue = "de")
 		String getLanguage();
 
-		@Option(defaultValue = "false")
-		boolean getSkipNER();
+		@Option()
+		boolean isSkipNER();
 
-		@Option(defaultValue = "false")
-		boolean getSkipSpeakerIdentifier();
+		@Option()
+		boolean isSkipSpeakerIdentifier();
 	}
 }
