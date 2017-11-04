@@ -18,10 +18,10 @@ run-tg:
 	java -cp target/assembly/drama.Main.jar ${TEI2XMI} --input ${DATADIR}/tei2/tg/ --output ${DATADIR}/xmi/tg/ --dlinaDirectory ${DLINADIR}/data/zwischenformat/ --genderModel src/main/resources/gender-v2.jar  --collectionId "tg" --doCleanup
 
 run-gdc: 
-	java -cp target/assembly/drama.Main.jar ${TEI2XMI} --input ../gerdracor/data --output ${DATADIR}/xmi/gdc/ --dlinaDirectory ${DLINADIR}/data/zwischenformat/ --genderModel src/main/resources/gender-v2.jar --skipSpeakerIdentifier  --collectionId "gdc" --doCleanup --readerClassname "de.unistuttgart.quadrama.io.tei.textgrid.GerDraCorUrlReader"
+	java -cp target/assembly/drama.Main.jar ${TEI2XMI} --input ../gerdracor/data --output ${DATADIR}/xmi/gdc/ --skipSpeakerIdentifier  --collectionId "gdc" --doCleanup --readerClassname "de.unistuttgart.quadrama.io.tei.textgrid.GerDraCorUrlReader"
 
 %.zip:
-	zip -r ${ZIPDIR}/$@ ${DATADIR}/xmi -i $*/*.xmi
+	cd ${DATADIR}/xmi; zip -r ${ZIPDIR}/$@ . -i $*/*.xmi
 
 
 commitpush:
