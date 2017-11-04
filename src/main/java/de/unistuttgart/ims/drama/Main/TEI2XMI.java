@@ -3,19 +3,12 @@ package de.unistuttgart.ims.drama.Main;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FilenameFilter;
-import java.util.Iterator;
 
-import org.apache.uima.cas.impl.XmiCasDeserializer;
-import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AggregateBuilder;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
-import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
-import org.apache.uima.jcas.JCas;
 
 import com.lexicalscope.jewel.cli.CliFactory;
 import com.lexicalscope.jewel.cli.Option;
@@ -96,13 +89,7 @@ public class TEI2XMI {
 					return name.endsWith("xmi");
 				}
 			})) {
-				JCas jcas = JCasFactory.createJCas();
-				XmiCasDeserializer.deserialize(new FileInputStream(f), jcas.getCas());
-				Iterator<JCas> iter = jcas.getViewIterator("tmp");
-				while (iter.hasNext()) {
-					iter.next().reset();
-				}
-				XmiCasSerializer.serialize(jcas.getCas(), new FileOutputStream(f));
+				XmlCleanup.cleanUp(f);
 			}
 	}
 
